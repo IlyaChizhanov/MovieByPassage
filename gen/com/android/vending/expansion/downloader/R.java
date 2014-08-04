@@ -8,7 +8,7 @@ package com.android.vending.expansion.downloader;
 
 public final class R {
 	public static final class drawable {
-		public static final int notify_panel_notification_icon_bg = 0x7f020025;
+		public static final int notify_panel_notification_icon_bg = 0x7f020026;
 	}
 	public static final class id {
 		public static final int appIcon = 0x7f08001b;
@@ -21,7 +21,7 @@ public final class R {
 		public static final int title = 0x7f08001d;
 	}
 	public static final class layout {
-		public static final int status_bar_ongoing_event_progress_bar = 0x7f030004;
+		public static final int status_bar_ongoing_event_progress_bar = 0x7f030005;
 	}
 	public static final class string {
 		public static final int kilobytes_per_second = 0x7f060034;

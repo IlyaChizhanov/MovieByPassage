@@ -59,7 +59,8 @@ public class game extends Activity implements OnPreparedListener,
 		mediaPlayer = new MediaPlayer();//создаём объект медиа плеера
 		//------------загружаем видео---------------------
 		load_film();//загружаем видео
-		recall.show();
+		
+		
 		correctWordStart();//отдельный поток для проверки правильности введённого слова 
 		
 		mediaPlayer.setOnPreparedListener(this);//оброботчик. Вызовиться когда видео будет готово
@@ -165,12 +166,23 @@ public class game extends Activity implements OnPreparedListener,
 				startActivityForResult(correct, 1);//говорим что ждём результат
 				break;
 			}
+			if(editBlock.tips){
+				editBlock.tips = false;
+				Intent bonus = new Intent(game.this,bonus.class);
+				startActivityForResult(bonus, 2);//говорим что ждём результат
+			}
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	//событие результата от окна
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Editor editor;
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case 1:
@@ -182,11 +194,43 @@ public class game extends Activity implements OnPreparedListener,
 				editBlock.UpdateInfo(lvl, money);
 				editBlock.invalidate();
 				//обновляем настройки
-				Editor editor = settings.edit();
+				editor = settings.edit();
 				editor.putInt("lvl", lvl);
 				editor.putInt("money", money);
 				editor.commit();//готово
 				correctWordStart();//стартуем новый поток проверки правильности слова
+				break;
+			case 2:
+				if (data == null) {return;}
+				int activ = data.getIntExtra("activ", 0);
+				if(activ == 1){
+					if(money >= 5){
+					editBlock.RemoveLetter();
+					money-=5;
+					} else {
+						Log.d("DEB","Не хватает денег");
+					}
+				} else if(activ == 2){
+					if(money >= 15){
+					editBlock.OpenLetter();
+					money-=15;
+					} else {
+						Log.d("DEB","Не хватает денег");
+					}
+				} else if(activ == 3){
+					
+				} else if(activ == 4){
+					
+				}
+				
+				editor = settings.edit();
+				editor.putInt("money", money);
+				editor.commit();//готово
+				
+				editBlock.UpdateInfo(lvl, money);
+				editBlock.invalidate();
+				
+				break;
 			}
 	  }
 	}

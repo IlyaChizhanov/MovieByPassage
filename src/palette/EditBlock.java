@@ -26,10 +26,14 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	Paint paint = new Paint();
 	Matrix matrix = new Matrix();
 	char[] letters = new char[20];//массив букв
+	int[] discarded_letters = new int[20];//выброшенные буквы
+	int[] open_letters;//массив заполненных ячеек
 	int[] cells;//массив заполненных ячеек
 	char[] cells_final;//массив ячеек
 	int lvl = 1;
 	int money = 0;
+	
+	public boolean tips = false;
 	
 	SoundPool sp;
 	final int MAX_STREAMS = 4;
@@ -41,7 +45,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	//последовательности букв
 	char ru_letters[] = {'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',
 			'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'};
-	char en_letters[] = {'A', 'B', 'C'};
+	char en_letters[] = {'A', 'B', 'C', 'D'};
 	
 	final Random gen = new Random();
 	
@@ -79,6 +83,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	public void UpdateWord(String word, int language){
 		//определяем массивы для заполнения их буквами
 		cells = new int[word.length()];
+		open_letters = new int[word.length()];
 		cells_final = new char[word.length()];
 		cells_final = word.toCharArray();
 		
@@ -110,7 +115,97 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	    for(int j = 0; j < cells.length; j++){
 			cells[j] = -1;
 		}
+	    
+	    //заполняем массив выкинутых букв незаполненными буквами
+	    for(int i = 0; i < discarded_letters.length; i++){
+	    	discarded_letters[i] = -1;
+		}
+	    
+	    for(int i = 0; i < open_letters.length; i++){
+	    	open_letters[i] = -1;
+		}
 	}
+	
+	//открываем букву
+	public boolean OpenLetter(){
+		
+		for(int i = 0; i < cells_final.length; i++){
+			int n = gen.nextInt(cells_final.length);
+			if(cells_final[n] == ' ')continue;
+			if(open_letters[n] != -1)continue;
+			if(cells[n] == -1){
+				open_letters[n] = getLetter(cells_final[n]);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private int getLetter(char lett){
+		for(int i = 0; i < letters.length; i++){
+			if(letters[i] == lett){
+				del_cells(i);//удаляем из ячейки эту букву
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	//убираем букву
+	public boolean RemoveLetter(){
+		if(kol_discarded_letters() == (20 - cells_final.length)){
+			return false;//не можем больше исключать буквы
+		}
+		
+		for(int i = 0; i < letters.length; i++){
+			int n = gen.nextInt(letters.length);
+			if(!presence_letter(letters[n])){
+				if(letters[n] == ' ')continue;
+				del_cells(n);//удаляем из ечейки
+				letters[n] = ' ';
+				return true;
+			}
+		}
+		
+		for(int i = 0; i < letters.length; i++){
+			if(!presence_letter(letters[i])){
+				if(letters[i] == ' ')continue;
+				del_cells(i);//удаляем из ечейки
+				letters[i] = ' ';
+				return true;
+			}
+		}
+		return false;//незанятую букву найти не удалось
+	}
+	
+	//определяем есть ли такая буква в слове
+	private boolean presence_letter(char lett){
+		for(int i = 0; i < cells_final.length; i++){
+			if(cells_final[i] == lett){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//подскитываем количество выкинутых букв
+	private int kol_discarded_letters(){
+		int n = 0;
+		for(int i = 0; i < discarded_letters.length; i++){
+	    	if(discarded_letters[i] != -1){
+	    		n++;
+	    	}
+		}
+		return n;
+	}
+	
+	private void del_cells(int i) {
+		for(int j = 0; j < cells.length; j++){
+			if(cells[j] == i){
+				cells[j] = -1;
+			}
+		}
+	}	
 	
 	@Override 
     public boolean onTouchEvent(MotionEvent event){
@@ -134,7 +229,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 				//заполняем буквой первую свободную ячейку
 				for(int i=0; i < cells.length; i++){
 					if(cells_final[i] == ' ') continue;
-					if(cells[i] == -1){
+					if(cells[i] == -1 && open_letters[i] == -1){
 						cells[i] = ID;
 						MediaClick();//воспроизводим звук
 						if(cells_final.length-1 == i && !WordCorrect()){
@@ -153,12 +248,17 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 				for(int i=0; i < cells_final.length; i++){
 					if(cells_final[i] == ' ') continue;
 					if(inBounds(x_click, y_click, (float)(center + a * i),y3, a, a)){
+						if(cells[i] == -1)break;
 						cells[i] = -1;
 						MediaClick();//воспроизводим звук
 						invalidate();
 						break;
 					}
 				}
+			}
+			
+			if(x_click > (float)(w * 0.895) && y_click > (float)(h * 0.805) ){
+				tips = true;
 			}
 		}
 		return true;
@@ -238,11 +338,15 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		try{
 		for(int i=0; i < cells_final.length; i++){
 			if(cells_final[i] == ' ') continue;
-			if(cells[i] == -1){
+			if(cells[i] == -1 && open_letters[i] == -1){
 				correct = false;
 				break;
 			}
-			if((int)cells_final[i] != (int)letters[cells[i]])
+			
+			int n = cells[i];
+			if(cells[i] == -1) n = open_letters[i];
+			
+			if((int)cells_final[i] != (int)letters[n])
 			{
 				correct = false;
 				break;
@@ -262,7 +366,6 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		
 		for(int i=0; i < 10; i++){
 			if(cells_nul(i))continue;
-			
 			drawPixmap(canvas, getImage(letters[i]),
 					(float)((w*0.105) + a * i + w*0.01 * i),
 					y,
@@ -273,7 +376,6 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		y = (float)(y + a + h*0.02);
 		for(int i=0; i < 10; i++){
 			if(cells_nul(10+i))continue;
-			
 			drawPixmap(canvas, getImage(letters[i+10]),
 					(float)((w*0.105) + a * i + w*0.01 * i),
 					y,
@@ -285,13 +387,22 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	
 	//проверяем занятость
 	private boolean cells_nul(int i) {
-		boolean nul = false;
 		for(int j = 0; j < cells.length; j++){
 			if(cells[j] == i){
-				nul = true;
+				return true;
 			}
 		}
-		return nul;
+		for(int j = 0; j < open_letters.length; j++){
+			if(open_letters[j] == i){
+				return true;
+			}
+		}
+		
+		if(letters[i] == ' '){
+			return true;
+		}
+		
+		return false;
 	}	
 	
 	private void create_cells(Canvas canvas, int w, int h) {
@@ -312,6 +423,14 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 			
 			if(cells[i] != -1){
 				drawPixmap(canvas, getImage(letters[cells[i]]),
+						(float)(center + a * i),y,
+						images.getImage("ru_a").getWidth(),
+						images.getImage("ru_a").getHeight(),
+						a,a, 0);
+			}
+			
+			if(open_letters[i] != -1){
+				drawPixmap(canvas, getImage(letters[open_letters[i]]),
 						(float)(center + a * i),y,
 						images.getImage("ru_a").getWidth(),
 						images.getImage("ru_a").getHeight(),
@@ -433,6 +552,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	public void MediaClick(){
 		sp.play(soundIdClick, 1, 1, 0, 0, 1);
 	}
+	
 	@Override
 	public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {		
 	}
