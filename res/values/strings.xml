@@ -1,0 +1,12 @@
+<resources>
+    <string name="studio">Step in Time</string>
+    
+    <string name="app_name">Кино по отрывку</string>
+    <string name="start">Старт</string>
+    
+    <string name="recall_titile">Оцените</string>
+    <string name="recall_yes">Оценить</string>
+    <string name="recall_no">Не спрашивать</string>
+    <string name="recall_later">Позже</string>
+    <string name="recall_message">Оцените наше приложение</string>
+</resources>
