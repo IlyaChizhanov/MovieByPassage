@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
-public class bonus extends Activity {
+public class Bonus extends Activity {
 	
 	int Width;
 	int Height;

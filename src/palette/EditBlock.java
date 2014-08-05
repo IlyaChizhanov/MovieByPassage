@@ -17,7 +17,7 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import static screen.main.images;
+import static screen.Main.images;
 
 
 public class EditBlock extends View implements OnLoadCompleteListener {

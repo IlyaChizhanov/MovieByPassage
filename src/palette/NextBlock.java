@@ -9,7 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
-import static screen.main.images;
+import static screen.Main.images;
 
 public class NextBlock extends View {
 	

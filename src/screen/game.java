@@ -2,7 +2,7 @@ package screen;
 
 import palette.EditBlock;
 import tools.Alert;
-import tools.obb_tools;
+import tools.ObbTools;
 import tools.Recall;
 
 import com.moviebypassage.R;
@@ -22,7 +22,7 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.LinearLayout;
 
-public class game extends Activity implements OnPreparedListener,
+public class Game extends Activity implements OnPreparedListener,
  SurfaceHolder.Callback
 {
 	private MediaPlayer mediaPlayer;//медиа плеер для видео
@@ -33,13 +33,13 @@ public class game extends Activity implements OnPreparedListener,
 	private int lvl = 1;//номер уровня
 	private int money = 0;//количество монет
 	
-	obb_tools obb;//класс для работы с файлами расширения
+	ObbTools obb;//класс для работы с файлами расширения
 	Recall recall;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
 		
-		obb = new obb_tools(this);//для работы с файлами расширения
+		obb = new ObbTools(this);//для работы с файлами расширения
 		recall = new Recall(this);// просба оценить приложение
 		
 		//загружаем настройки
@@ -158,7 +158,7 @@ public class game extends Activity implements OnPreparedListener,
 				mediaPlayer.pause();//останавливаем видео
 				editBlock.MediaCorrect();//воспроизводим звук привильного слова
 				//показываем блок с продолжением
-				Intent correct = new Intent(game.this,correct.class);
+				Intent correct = new Intent(Game.this,Correct.class);
 				//передаём информацию
 				correct.putExtra("lvl", lvl+1);
 				correct.putExtra("money", money+15);
@@ -167,7 +167,7 @@ public class game extends Activity implements OnPreparedListener,
 			}
 			if(editBlock.tips){
 				editBlock.tips = false;
-				Intent bonus = new Intent(game.this,bonus.class);
+				Intent bonus = new Intent(Game.this,Bonus.class);
 				startActivityForResult(bonus, 2);//говорим что ждём результат
 			}
 			try {
@@ -221,7 +221,7 @@ public class game extends Activity implements OnPreparedListener,
 				} else if(activ == 3){
 					if(money >= 40){
 						editBlock.MediaMoney();
-						Intent poster = new Intent(game.this,poster.class);
+						Intent poster = new Intent(Game.this,Poster.class);
 						poster.putExtra("lvl", lvl);
 						startActivity(poster);
 						money-=40;
@@ -231,7 +231,7 @@ public class game extends Activity implements OnPreparedListener,
 				} else if(activ == 4){
 					if(money >= 60){
 						editBlock.MediaMoney();
-						Intent contents = new Intent(game.this,Contents.class);
+						Intent contents = new Intent(Game.this,Contents.class);
 						contents.putExtra("lvl", lvl);
 						startActivity(contents);
 						money-=60;
@@ -253,7 +253,7 @@ public class game extends Activity implements OnPreparedListener,
 	}
 
 	private void StartAlert(String text) {
-		Intent alert = new Intent(game.this,Alert.class);
+		Intent alert = new Intent(Game.this,Alert.class);
 		alert.putExtra("text", text);
 		startActivity(alert);
 	}
