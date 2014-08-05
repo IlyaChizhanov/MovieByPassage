@@ -17,7 +17,7 @@ public class Bonus extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bonus);
 		
-		// Óçíàåì ðàçìåðû ýêðàíà èç ðåñóðñîâ
+		// Ð£Ð·Ð½Ð°ÐµÐ¼ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ ÑÐºÑ€Ð°Ð½Ð° Ð¸Ð· Ñ€ÐµÑÑƒÑ€ÑÐ¾Ð²
 		DisplayMetrics displaymetrics = getResources().getDisplayMetrics();
 		Width = displaymetrics.widthPixels;
 		Height = displaymetrics.heightPixels;
@@ -40,17 +40,17 @@ public class Bonus extends Activity {
 			
 			
 			if((x_click > x1 && x_click < x2)&&
-				y_click > y1 && y_click < y2){//ðàìêà
+				y_click > y1 && y_click < y2){//Ñ€Ð°Ð¼ÐºÐ°
 				
 				if(y_click < y_but1){
-					//óáðàòü áóêâó
+					//ÑƒÐ±Ñ€Ð°Ñ‚ÑŒ Ð±ÑƒÐºÐ²Ñƒ
 					Intent intent = new Intent();
 				    intent.putExtra("activ", 1);
 				    setResult(RESULT_OK, intent);
 				    finish();
 				} else 
 				if(y_click < y_but2){
-					//îòêðûòü áóêâó
+					//Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð±ÑƒÐºÐ²Ñƒ
 					Intent intent = new Intent();
 				    intent.putExtra("activ", 2);
 				    setResult(RESULT_OK, intent);
