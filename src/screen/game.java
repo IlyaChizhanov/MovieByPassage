@@ -204,20 +204,23 @@ public class game extends Activity implements OnPreparedListener,
 				int activ = data.getIntExtra("activ", 0);
 				if(activ == 1){
 					if(money >= 5){
-					editBlock.RemoveLetter();
-					money-=5;
+						editBlock.MediaMoney();
+						editBlock.RemoveLetter();
+						money-=5;
 					} else {
 						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 2){
 					if(money >= 15){
-					editBlock.OpenLetter();
-					money-=15;
+						editBlock.MediaMoney();
+						editBlock.OpenLetter();
+						money-=15;
 					} else {
 						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 3){
 					if(money >= 40){
+						editBlock.MediaMoney();
 						Intent poster = new Intent(game.this,poster.class);
 						poster.putExtra("lvl", lvl);
 						startActivity(poster);
@@ -227,6 +230,7 @@ public class game extends Activity implements OnPreparedListener,
 					}
 				} else if(activ == 4){
 					if(money >= 60){
+						editBlock.MediaMoney();
 						Intent contents = new Intent(game.this,Contents.class);
 						contents.putExtra("lvl", lvl);
 						startActivity(contents);

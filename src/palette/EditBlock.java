@@ -41,6 +41,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	int soundIdCorrect;
 	int soundIdError;
 	int soundIdVictory;
+	int soundIdMoney;
 	
 	//последовательности букв
 	char ru_letters[] = {'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',
@@ -67,7 +68,8 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		soundIdCorrect = sp.load(context, R.raw.correct, 1);;
 		soundIdError = sp.load(context, R.raw.error, 1);;
 		soundIdVictory = sp.load(context, R.raw.victory, 1);;
-		
+		soundIdMoney = sp.load(context, R.raw.money, 1);;
+				
 		UpdateWord(word, language);
 		
 		paint.setFlags(Paint.ANTI_ALIAS_FLAG);
@@ -551,6 +553,10 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	
 	public void MediaClick(){
 		sp.play(soundIdClick, 1, 1, 0, 0, 1);
+	}
+	
+	public void MediaMoney(){
+		sp.play(soundIdMoney, 1, 1, 0, 0, 1);
 	}
 	
 	@Override

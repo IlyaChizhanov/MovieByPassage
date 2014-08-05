@@ -500,7 +500,8 @@ containing a value of this type.
         public static final int click=0x7f040000;
         public static final int correct=0x7f040001;
         public static final int error=0x7f040002;
-        public static final int victory=0x7f040003;
+        public static final int money=0x7f040003;
+        public static final int victory=0x7f040004;
     }
     public static final class string {
         public static final int app_name=0x7f060038;

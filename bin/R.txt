@@ -186,7 +186,8 @@ int layout status_bar_ongoing_event_progress_bar 0x7f030008
 int raw click 0x7f040000
 int raw correct 0x7f040001
 int raw error 0x7f040002
-int raw victory 0x7f040003
+int raw money 0x7f040003
+int raw victory 0x7f040004
 int string app_name 0x7f060038
 int string auth_client_needs_enabling_title 0x7f060001
 int string auth_client_needs_installation_title 0x7f060002
