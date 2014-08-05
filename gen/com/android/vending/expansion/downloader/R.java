@@ -8,20 +8,20 @@ package com.android.vending.expansion.downloader;
 
 public final class R {
 	public static final class drawable {
-		public static final int notify_panel_notification_icon_bg = 0x7f020026;
+		public static final int notify_panel_notification_icon_bg = 0x7f020028;
 	}
 	public static final class id {
-		public static final int appIcon = 0x7f08001b;
-		public static final int description = 0x7f080021;
-		public static final int notificationLayout = 0x7f08001a;
-		public static final int progress_bar = 0x7f080020;
-		public static final int progress_bar_frame = 0x7f08001f;
-		public static final int progress_text = 0x7f08001c;
-		public static final int time_remaining = 0x7f08001e;
-		public static final int title = 0x7f08001d;
+		public static final int appIcon = 0x7f08001f;
+		public static final int description = 0x7f080025;
+		public static final int notificationLayout = 0x7f08001e;
+		public static final int progress_bar = 0x7f080024;
+		public static final int progress_bar_frame = 0x7f080023;
+		public static final int progress_text = 0x7f080020;
+		public static final int time_remaining = 0x7f080022;
+		public static final int title = 0x7f080021;
 	}
 	public static final class layout {
-		public static final int status_bar_ongoing_event_progress_bar = 0x7f030005;
+		public static final int status_bar_ongoing_event_progress_bar = 0x7f030008;
 	}
 	public static final class string {
 		public static final int kilobytes_per_second = 0x7f060034;

@@ -1,6 +1,7 @@
 package screen;
 
 import palette.EditBlock;
+import tools.Alert;
 import tools.obb_tools;
 import tools.Recall;
 
@@ -15,7 +16,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -59,7 +59,6 @@ public class game extends Activity implements OnPreparedListener,
 		mediaPlayer = new MediaPlayer();//создаём объект медиа плеера
 		//------------загружаем видео---------------------
 		load_film();//загружаем видео
-		
 		
 		correctWordStart();//отдельный поток для проверки правильности введённого слова 
 		
@@ -208,19 +207,33 @@ public class game extends Activity implements OnPreparedListener,
 					editBlock.RemoveLetter();
 					money-=5;
 					} else {
-						Log.d("DEB","Не хватает денег");
+						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 2){
 					if(money >= 15){
 					editBlock.OpenLetter();
 					money-=15;
 					} else {
-						Log.d("DEB","Не хватает денег");
+						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 3){
-					
+					if(money >= 40){
+						Intent poster = new Intent(game.this,poster.class);
+						poster.putExtra("lvl", lvl);
+						startActivity(poster);
+						money-=40;
+					} else {
+						StartAlert("Не хватает монет");
+					}
 				} else if(activ == 4){
-					
+					if(money >= 60){
+						Intent contents = new Intent(game.this,Contents.class);
+						contents.putExtra("lvl", lvl);
+						startActivity(contents);
+						money-=60;
+					} else {
+						StartAlert("Не хватает монет");
+					}
 				}
 				
 				editor = settings.edit();
@@ -233,6 +246,12 @@ public class game extends Activity implements OnPreparedListener,
 				break;
 			}
 	  }
+	}
+
+	private void StartAlert(String text) {
+		Intent alert = new Intent(game.this,Alert.class);
+		alert.putExtra("text", text);
+		startActivity(alert);
 	}
 	
 	//Названия фильмов по уровням
@@ -287,6 +306,7 @@ public class game extends Activity implements OnPreparedListener,
 		case 24:
 			return "ПРОЕКТ Х";
 		}
+		StartAlert("Видео почему то не найденно. Попробуйте перезайти в игру");
 		return "ВИДЕО НЕТУ";
 	}
 	
