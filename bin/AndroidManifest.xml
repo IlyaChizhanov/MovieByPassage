@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="screen.Main"
+            android:name="screen.main"
             android:label="@string/app_name" 
             android:screenOrientation="portrait">
             <intent-filter>
@@ -41,14 +41,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="screen.Game"
+        <activity android:name="screen.game" 
             android:screenOrientation="portrait"
             />
-        <activity android:name="screen.Correct"
+        <activity android:name="screen.correct"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait"
             />
-        <activity android:name="screen.Bonus"
+        <activity android:name="screen.bonus"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait"
             />
@@ -57,7 +57,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait"
             />
-        <activity android:name="screen.Poster"
+        <activity android:name="screen.poster"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait"
             />

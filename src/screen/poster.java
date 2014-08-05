@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-public class Poster extends Activity {
+public class poster extends Activity {
 	private int lvl;
 	
 	protected void onCreate(Bundle savedInstanceState) {

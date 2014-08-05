@@ -2,7 +2,7 @@ package screen;
 
 import palette.EditBlock;
 import tools.Alert;
-import tools.ObbTools;
+import tools.obb_tools;
 import tools.Recall;
 
 import com.moviebypassage.R;
@@ -22,47 +22,47 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.LinearLayout;
 
-public class Game extends Activity implements OnPreparedListener,
+public class game extends Activity implements OnPreparedListener,
  SurfaceHolder.Callback
 {
-	private MediaPlayer mediaPlayer;//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-	private EditBlock editBlock;//пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-	private SharedPreferences settings;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	private MediaPlayer mediaPlayer;//медиа плеер для видео
+	private EditBlock editBlock;//блок в буквами и ячейками
+	private SharedPreferences settings;//настройки: уровни и монеты
 	
-	private boolean played = false;//true пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, false пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
-	private int lvl = 1;//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-	private int money = 0;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	private boolean played = false;//true если видео играеться, false если нет
+	private int lvl = 1;//номер уровня
+	private int money = 0;//количество монет
 	
-	ObbTools obb;//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	obb_tools obb;//класс для работы с файлами расширения
 	Recall recall;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
 		
-		obb = new ObbTools(this);//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-		recall = new Recall(this);// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		obb = new obb_tools(this);//для работы с файлами расширения
+		recall = new Recall(this);// просба оценить приложение
 		
-		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		//загружаем настройки
 		settings = getSharedPreferences("MovieByPassage", 0);
 		lvl = settings.getInt("lvl", 1);
 		money = settings.getInt("money", 0);
-		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-		editBlock = new EditBlock(this, WordName(lvl), 0);//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-		editBlock.UpdateInfo(lvl, money);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		//создаём первое слово
+		editBlock = new EditBlock(this, WordName(lvl), 0);//создаём едитблок
+		editBlock.UpdateInfo(lvl, money);//обновляем информация статистики
 		
-		((LinearLayout)findViewById(R.id.edit_block)).addView(editBlock);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+		((LinearLayout)findViewById(R.id.edit_block)).addView(editBlock);//добавляем блок к экрану
 		
-		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+		//создаём блок просмотра видео
 		SurfaceHolder holder = ((SurfaceView)findViewById(R.id.surfaceView1)).getHolder();
 		holder.addCallback((Callback) this);
 		
-		mediaPlayer = new MediaPlayer();//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-		//------------пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ---------------------
-		load_film();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+		mediaPlayer = new MediaPlayer();//создаём объект медиа плеера
+		//------------загружаем видео---------------------
+		load_film();//загружаем видео
 		
-		correctWordStart();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
+		correctWordStart();//отдельный поток для проверки правильности введённого слова 
 		
-		mediaPlayer.setOnPreparedListener(this);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+		mediaPlayer.setOnPreparedListener(this);//оброботчик. Вызовиться когда видео будет готово
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class Game extends Activity implements OnPreparedListener,
 	}
 
 	private void correctWordStart() {
-		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+		//начинаем проверку правильности слова
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -83,7 +83,7 @@ public class Game extends Activity implements OnPreparedListener,
 		}).start();
 	}
 	
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	//загрузка фильма
 	private void load_film() {
 		
 		if(settings.getInt("recall", 0) == 0){
@@ -94,7 +94,7 @@ public class Game extends Activity implements OnPreparedListener,
 		}
 		
 		
-		mediaPlayer.reset();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+		mediaPlayer.reset();//убираем старые данные
 		try {
 			AssetFileDescriptor afd = obb.getAssetFileDescriptor(lvl+".3gp");
 			mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
@@ -105,12 +105,12 @@ public class Game extends Activity implements OnPreparedListener,
 		}
 	}
 	
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//функция старта проигрывания или переигрывания
 	public void ReplayMovie(){
-        if(!mediaPlayer.isPlaying()){mediaPlayer.start();}//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-        mediaPlayer.seekTo(0);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-        played = true;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        if(!mediaPlayer.isPlaying()){mediaPlayer.start();}//если видео не играет стартуем
+        mediaPlayer.seekTo(0);//возвращаемся в начало
+        played = true;//сообщаем о том что видео играеться
+        //поток для остановки в нужный момент
         new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -119,56 +119,56 @@ public class Game extends Activity implements OnPreparedListener,
 		}).start();        
 	}
 	
-	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//как только видео загруженно стартуем
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		ReplayMovie();
 	}
 	
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//останавливает проигрывание фильма на нужном моменте
 	private void stop_film() {
-		while(played){//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+		while(played){//если видео не играеться то не ждём конца
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 15 пїЅпїЅпїЅпїЅпїЅпїЅ 
+			//останавливаем видео если оно играеться больше 15 секунд 
 			if(mediaPlayer.getCurrentPosition() > 15000 && mediaPlayer.isPlaying()){
-				if(mediaPlayer != null)mediaPlayer.pause();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-				played = false;//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-			} else if(!mediaPlayer.isPlaying()){//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-				played = false;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+				if(mediaPlayer != null)mediaPlayer.pause();//останавливаем видео
+				played = false;//видео не играеться
+			} else if(!mediaPlayer.isPlaying()){//если видео не играеться
+				played = false;//обновляем статус
 			}
 		}
 	}
 
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
+	//событие клика по экрану с видео
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		ReplayMovie();
 		return super.onTouchEvent(event);
 	}
 	
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	//событие правильного слова
 	private void RightWord(){
 		while(true){
 			if(editBlock.WordCorrect()){
-				if(lvl == 24)return;//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-				mediaPlayer.pause();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-				editBlock.MediaCorrect();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-				Intent correct = new Intent(Game.this, Correct.class);
-				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				if(lvl == 24)return;//если достигнут конец
+				mediaPlayer.pause();//останавливаем видео
+				editBlock.MediaCorrect();//воспроизводим звук привильного слова
+				//показываем блок с продолжением
+				Intent correct = new Intent(game.this,correct.class);
+				//передаём информацию
 				correct.putExtra("lvl", lvl+1);
 				correct.putExtra("money", money+15);
-				startActivityForResult(correct, 1);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				startActivityForResult(correct, 1);//говорим что ждём результат
 				break;
 			}
 			if(editBlock.tips){
 				editBlock.tips = false;
-				Intent bonus = new Intent(Game.this, Bonus.class);
-				startActivityForResult(bonus, 2);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				Intent bonus = new Intent(game.this,bonus.class);
+				startActivityForResult(bonus, 2);//говорим что ждём результат
 			}
 			try {
 				Thread.sleep(200);
@@ -178,7 +178,7 @@ public class Game extends Activity implements OnPreparedListener,
 		}
 	}
 	
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+	//событие результата от окна
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Editor editor;
@@ -187,17 +187,17 @@ public class Game extends Activity implements OnPreparedListener,
 			case 1:
 				lvl +=1;
 				money+=15;
-				load_film();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				load_film();//загружаем новый фильм
+				//обновляем блок с буквами и информацией
 				editBlock.UpdateWord(WordName(lvl), 0);
 				editBlock.UpdateInfo(lvl, money);
 				editBlock.invalidate();
-				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				//обновляем настройки
 				editor = settings.edit();
 				editor.putInt("lvl", lvl);
 				editor.putInt("money", money);
-				editor.commit();//пїЅпїЅпїЅпїЅпїЅпїЅ
-				correctWordStart();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+				editor.commit();//готово
+				correctWordStart();//стартуем новый поток проверки правильности слова
 				break;
 			case 2:
 				if (data == null) {return;}
@@ -208,7 +208,7 @@ public class Game extends Activity implements OnPreparedListener,
 						editBlock.RemoveLetter();
 						money-=5;
 					} else {
-						StartAlert("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 2){
 					if(money >= 15){
@@ -216,33 +216,33 @@ public class Game extends Activity implements OnPreparedListener,
 						editBlock.OpenLetter();
 						money-=15;
 					} else {
-						StartAlert("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 3){
 					if(money >= 40){
 						editBlock.MediaMoney();
-						Intent poster = new Intent(Game.this, Poster.class);
+						Intent poster = new Intent(game.this,poster.class);
 						poster.putExtra("lvl", lvl);
 						startActivity(poster);
 						money-=40;
 					} else {
-						StartAlert("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+						StartAlert("Не хватает монет");
 					}
 				} else if(activ == 4){
 					if(money >= 60){
 						editBlock.MediaMoney();
-						Intent contents = new Intent(Game.this,Contents.class);
+						Intent contents = new Intent(game.this,Contents.class);
 						contents.putExtra("lvl", lvl);
 						startActivity(contents);
 						money-=60;
 					} else {
-						StartAlert("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+						StartAlert("Не хватает монет");
 					}
 				}
 				
 				editor = settings.edit();
 				editor.putInt("money", money);
-				editor.commit();//пїЅпїЅпїЅпїЅпїЅпїЅ
+				editor.commit();//готово
 				
 				editBlock.UpdateInfo(lvl, money);
 				editBlock.invalidate();
@@ -253,70 +253,70 @@ public class Game extends Activity implements OnPreparedListener,
 	}
 
 	private void StartAlert(String text) {
-		Intent alert = new Intent(Game.this,Alert.class);
+		Intent alert = new Intent(game.this,Alert.class);
 		alert.putExtra("text", text);
 		startActivity(alert);
 	}
 	
-	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//Названия фильмов по уровням
 	private String WordName(int lvl){
 		switch (lvl) {
 		case 1:
-			return "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
+			return "ОДИН ДОМА";
 		case 2:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "РОБОКОП";
 		case 3:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "СВЕРХЕСТЕСТВЕННОЕ";
 		case 4:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "МСТИТЕЛИ";
 		case 5:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "АВАТАР";
 		case 6:
-			return "пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "ВО ВСЕ ТЯЖКИЕ";
 		case 7:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ";
+			return "ОПЕРАЦИЯ Ы";
 		case 8:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "ДЕКСТЕР";
 		case 9:
-			return "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
+			return "КИНГ КОНГ";
 		case 10:
-			return "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "ПЯТЫЙ ЭЛЕМЕНТ";
 		case 11:
-			return "пїЅпїЅпїЅпїЅ пїЅ ЧЁпїЅпїЅпїЅпїЅ";
+			return "ЛЮДИ В ЧЁРНОМ";
 		case 12:
-			return "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
+			return "УБИТЬ БИЛЛА";
 		case 13:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "МАТРИЦА";
 		case 14:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "СВАДЕБНЫЙ РАЗГРОМ";
 		case 15:
-			return "пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ";
+			return "МАЧО И БОТАН";
 		case 16:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ";
+			return "ДОКТОР КТО";
 		case 17:
-			return "пїЅпїЅпїЅпїЅпїЅ";
+			return "ГРИММ";
 		case 18:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
+			return "ШЕРЛОК ХОЛМС";
 		case 19:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "ТИТАНИК";
 		case 20:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "ВОЛЧОНОК";
 		case 21:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
+			return "БОЙЦОВСКИЙ КЛУБ";
 		case 22:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
+			return "БЛУДЛИВАЯ КАЛИФОРНИЯ";
 		case 23:
-			return "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
+			return "ДЖЕЙН ОСТИН";
 		case 24:
-			return "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ";
+			return "ПРОЕКТ Х";
 		}
-		StartAlert("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ");
-		return "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
+		StartAlert("Видео почему то не найденно. Попробуйте перезайти в игру");
+		return "ВИДЕО НЕТУ";
 	}
 	
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		mediaPlayer.setDisplay(holder);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		mediaPlayer.setDisplay(holder);//присваеваем нашему медиа плееру экран для трансляции
 	}
 
 	@Override
