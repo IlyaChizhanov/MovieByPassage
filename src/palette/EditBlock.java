@@ -17,7 +17,7 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import static screen.main.images;
+import static screen.Main.images;
 
 
 public class EditBlock extends View implements OnLoadCompleteListener {
@@ -25,11 +25,11 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	String word;
 	Paint paint = new Paint();
 	Matrix matrix = new Matrix();
-	char[] letters = new char[20];//массив букв
-	int[] discarded_letters = new int[20];//выброшенные буквы
-	int[] open_letters;//массив заполненных ячеек
-	int[] cells;//массив заполненных ячеек
-	char[] cells_final;//массив ячеек
+	char[] letters = new char[20];//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	int[] discarded_letters = new int[20];//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	int[] open_letters;//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	int[] cells;//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	char[] cells_final;//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	int lvl = 1;
 	int money = 0;
 	
@@ -43,9 +43,9 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	int soundIdVictory;
 	int soundIdMoney;
 	
-	//последовательности букв
-	char ru_letters[] = {'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П',
-			'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'};
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	char ru_letters[] = {'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ',
+			'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ', 'пїЅ'};
 	char en_letters[] = {'A', 'B', 'C', 'D'};
 	
 	final Random gen = new Random();
@@ -55,7 +55,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	public EditBlock(Context context) {
 		super(context);
 	}
-	//конструктор
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	public EditBlock(Context context, String word, int language) {
 		super(context);
 		this.word = word;
@@ -83,28 +83,28 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	}
 	
 	public void UpdateWord(String word, int language){
-		//определяем массивы для заполнения их буквами
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		cells = new int[word.length()];
 		open_letters = new int[word.length()];
 		cells_final = new char[word.length()];
 		cells_final = word.toCharArray();
 		
-		//заполняем буквами
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		for(int i=0; i < 20; i++){
 			if(i >= cells_final.length || cells_final[i] == ' '){
-				//если слово короче 20 то остальные буквы случайные
-				if(language == 0){//русский язык
+				//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 20 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				if(language == 0){//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 					letters[i] = ru_letters[gen.nextInt(ru_letters.length)];
 				} else
-				if(language == 1){//английский язык
+				if(language == 1){//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 					letters[i] = en_letters[gen.nextInt(en_letters.length)];
 				}
 			} else {
-				//переносим букву
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 				letters[i] = cells_final[i];
 			}
 		}
-		//выполняем перестановку букв
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	    int n = letters.length;
 	    while (n > 1) {
 	        int k = gen.nextInt(n--);
@@ -113,12 +113,12 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	        letters[k] = temp;
 	    }
 	    
-	    //заполняем массив ячеек незаполненными буквами
+	    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	    for(int j = 0; j < cells.length; j++){
 			cells[j] = -1;
 		}
 	    
-	    //заполняем массив выкинутых букв незаполненными буквами
+	    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	    for(int i = 0; i < discarded_letters.length; i++){
 	    	discarded_letters[i] = -1;
 		}
@@ -128,7 +128,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		}
 	}
 	
-	//открываем букву
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	public boolean OpenLetter(){
 		
 		for(int i = 0; i < cells_final.length; i++){
@@ -146,24 +146,24 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	private int getLetter(char lett){
 		for(int i = 0; i < letters.length; i++){
 			if(letters[i] == lett){
-				del_cells(i);//удаляем из ячейки эту букву
+				del_cells(i);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 				return i;
 			}
 		}
 		return -1;
 	}
 	
-	//убираем букву
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	public boolean RemoveLetter(){
 		if(kol_discarded_letters() == (20 - cells_final.length)){
-			return false;//не можем больше исключать буквы
+			return false;//пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		}
 		
 		for(int i = 0; i < letters.length; i++){
 			int n = gen.nextInt(letters.length);
 			if(!presence_letter(letters[n])){
 				if(letters[n] == ' ')continue;
-				del_cells(n);//удаляем из ечейки
+				del_cells(n);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				letters[n] = ' ';
 				return true;
 			}
@@ -172,15 +172,15 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		for(int i = 0; i < letters.length; i++){
 			if(!presence_letter(letters[i])){
 				if(letters[i] == ' ')continue;
-				del_cells(i);//удаляем из ечейки
+				del_cells(i);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				letters[i] = ' ';
 				return true;
 			}
 		}
-		return false;//незанятую букву найти не удалось
+		return false;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	}
 	
-	//определяем есть ли такая буква в слове
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 	private boolean presence_letter(char lett){
 		for(int i = 0; i < cells_final.length; i++){
 			if(cells_final[i] == lett){
@@ -190,7 +190,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		return false;
 	}
 	
-	//подскитываем количество выкинутых букв
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	private int kol_discarded_letters(){
 		int n = 0;
 		for(int i = 0; i < discarded_letters.length; i++){
@@ -223,17 +223,17 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 			float y2 = (float)(y+(w*0.07)*2);
 			float y3 = (float)(h*0.084);
 			
-			if(y_click > y && y_click < y2){//игрок кликнул по букве
-				//определяем id кликнутой буквы
+			if(y_click > y && y_click < y2){//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ id пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 				int ID = onClickLetters(w, h, x_click, y_click);
-				if(ID==-1)return true;//если не удалось найти буквы то дальше не продолжаем
+				if(ID==-1)return true;//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				if(cells_nul(ID))return true;
-				//заполняем буквой первую свободную ячейку
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				for(int i=0; i < cells.length; i++){
 					if(cells_final[i] == ' ') continue;
 					if(cells[i] == -1 && open_letters[i] == -1){
 						cells[i] = ID;
-						MediaClick();//воспроизводим звук
+						MediaClick();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 						if(cells_final.length-1 == i && !WordCorrect()){
 							MediaError();
 						}
@@ -241,7 +241,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 						break;
 					}
 				}
-			}else if(y_click > y3){//игрок кликнул по ячейкам
+			}else if(y_click > y3){//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				
 				float a = (float)(w/cells_final.length);
 				if(a > ((h*0.18))) a = (float)((h*0.18));
@@ -252,7 +252,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 					if(inBounds(x_click, y_click, (float)(center + a * i),y3, a, a)){
 						if(cells[i] == -1)break;
 						cells[i] = -1;
-						MediaClick();//воспроизводим звук
+						MediaClick();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 						invalidate();
 						break;
 					}
@@ -270,13 +270,13 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		int ID = -1;
 		float a = (float)(w*0.07);
 		float y = (float)(h*0.365);
-		//первый ряд
+		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 		for(int i=0; i < 10; i++){
 			if(inBounds(x_click, y_click, (float)((w*0.105) + a * i + w*0.01 * i), y, a, a)){
 				ID = i;
 			}
 		}
-		//второй ряд
+		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 		for(int i=0; i < 10; i++){
 			if(inBounds(x_click, y_click, (float)((w*0.105) + a * i + w*0.01 * i), (float)(y + a + h*0.02), a, a)){
 				ID = 10+i;
@@ -290,16 +290,16 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		int w = this.getWidth();
 		int h = this.getHeight();
 		
-		//фон
+		//пїЅпїЅпїЅ
 		canvas.drawColor(Color.alpha(0));
 		
-		//буквы
+		//пїЅпїЅпїЅпїЅпїЅ
 		create_letters(canvas, w, h);
 		
-		//ячейки
+		//пїЅпїЅпїЅпїЅпїЅпїЅ
 		create_cells(canvas, w, h);
 		
-		//бар
+		//пїЅпїЅпїЅ
 		create_bar(canvas, w, h);
 		
 		super.onDraw(canvas);
@@ -322,7 +322,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 				w,height, 0);
 		
 		paint.setTextSize(size_text);
-		canvas.drawText(lvl + " уровень", x_text, (float)(y_text+(size_text*0.5)), paint);
+		canvas.drawText(lvl + " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", x_text, (float)(y_text+(size_text*0.5)), paint);
 		canvas.drawText(money + "", x_text2, (float)(y_text+(size_text*0.5)), paint);
 		
 		
@@ -334,7 +334,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 				images.getImage("money").getHeight(),
 				(float)(w*0.05),(float)(h*0.095), 0);
 	}
-	//проверка правильности слова
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	public boolean WordCorrect(){
 		boolean correct = true;
 		try{
@@ -387,7 +387,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		}
 	}
 	
-	//проверяем занятость
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	private boolean cells_nul(int i) {
 		for(int j = 0; j < cells.length; j++){
 			if(cells[j] == i){
@@ -443,71 +443,71 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	
 	private Pixmap getImage(char lettters){
 		switch (lettters) {
-		case 'А':
+		case 'пїЅ':
 			return images.getImage("ru_a");
-		case 'Б':
+		case 'пїЅ':
 			return images.getImage("ru_b");
-		case 'В':
+		case 'пїЅ':
 			return images.getImage("ru_v");
-		case 'Г':
+		case 'пїЅ':
 			return images.getImage("ru_g");
-		case 'Д':
+		case 'пїЅ':
 			return images.getImage("ru_d");
-		case 'Е':
+		case 'пїЅ':
 			return images.getImage("ru_ye");
-		case 'Ё':
+		case 'пїЅ':
 			return images.getImage("ru_ye2");
-		case 'Ж':
+		case 'пїЅ':
 			return images.getImage("ru_zh");
-		case 'З':
+		case 'пїЅ':
 			return images.getImage("ru_z");
-		case 'И':
+		case 'пїЅ':
 			return images.getImage("ru_i");
-		case 'Й':
+		case 'пїЅ':
 			return images.getImage("ru_y");
-		case 'К':
+		case 'пїЅ':
 			return images.getImage("ru_k");
-		case 'Л':
+		case 'пїЅ':
 			return images.getImage("ru_l");
-		case 'М':
+		case 'пїЅ':
 			return images.getImage("ru_m");
-		case 'Н':
+		case 'пїЅ':
 			return images.getImage("ru_n");
-		case 'О':
+		case 'пїЅ':
 			return images.getImage("ru_o");
-		case 'П':
+		case 'пїЅ':
 			return images.getImage("ru_p");
-		case 'Р':
+		case 'пїЅ':
 			return images.getImage("ru_r");
-		case 'С':
+		case 'пїЅ':
 			return images.getImage("ru_s");
-		case 'Т':
+		case 'пїЅ':
 			return images.getImage("ru_t");
-		case 'У':
+		case 'пїЅ':
 			return images.getImage("ru_u");
-		case 'Ф':
+		case 'пїЅ':
 			return images.getImage("ru_f");
-		case 'Х':
+		case 'пїЅ':
 			return images.getImage("ru_kh");
-		case 'Ц':
+		case 'пїЅ':
 			return images.getImage("ru_ts");
-		case 'Ч':
+		case 'пїЅ':
 			return images.getImage("ru_ch");
-		case 'Ш':
+		case 'пїЅ':
 			return images.getImage("ru_sh");
-		case 'Щ':
+		case 'пїЅ':
 			return images.getImage("ru_shch");
-		case 'Ъ':
+		case 'пїЅ':
 			return images.getImage("ru_tv");
-		case 'Ы':
+		case 'пїЅ':
 			return images.getImage("ru_y2");
-		case 'Ь':
+		case 'пїЅ':
 			return images.getImage("ru_tv2");
-		case 'Э':
+		case 'пїЅ':
 			return images.getImage("ru_e");
-		case 'Ю':
+		case 'пїЅ':
 			return images.getImage("ru_yu");
-		case 'Я':
+		case 'пїЅ':
 			return images.getImage("ru_ya");
 			
 		}
@@ -515,7 +515,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		
 	}
 	
-	//рисуем с поворотом
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	public void drawPixmap(Canvas canvas, Pixmap pixmap, float x, float y,
 			float Width, float Height, float newWidth, float newHeight, float rotate) {
 		
@@ -524,10 +524,10 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 
 	    matrix.reset();
 	    
-		matrix.postScale(scaleX, scaleY);//масштабируем
-		matrix.postTranslate(x, y);//задаём координаты
+		matrix.postScale(scaleX, scaleY);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		matrix.postTranslate(x, y);//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		
-		if(rotate != 0)matrix.preRotate(rotate, Width/2, Height/2);//поворачиваем относительно цетра
+		if(rotate != 0)matrix.preRotate(rotate, Width/2, Height/2);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		
         canvas.drawBitmap( ((PixmapGame) pixmap).getBitmap(), matrix, null);
     }

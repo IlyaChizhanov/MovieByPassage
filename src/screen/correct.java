@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 
-public class correct extends Activity {
+public class Correct extends Activity {
 	int lvl = 1;
 	int money = 0;
 	NextBlock nb;

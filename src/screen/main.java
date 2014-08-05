@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class main extends Activity {
+public class Main extends Activity {
 	
 	public static ImagesContainer images;
 	
@@ -17,13 +17,13 @@ public class main extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 		
-		//загружаем изображения
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		images = new ImagesContainer(this);
 	}
 	
-	//событие клика
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	public void onClickButtomPlay(View view){
-		Intent intent = new Intent(main.this, game.class);
+		Intent intent = new Intent(Main.this, Game.class);
 	    startActivity(intent);
 	}
 }

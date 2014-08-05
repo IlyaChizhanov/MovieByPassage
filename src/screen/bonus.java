@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
-public class bonus extends Activity {
+public class Bonus extends Activity {
 	
 	int Width;
 	int Height;
@@ -17,7 +17,7 @@ public class bonus extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bonus);
 		
-		// Узнаем размеры экрана из ресурсов
+		// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		DisplayMetrics displaymetrics = getResources().getDisplayMetrics();
 		Width = displaymetrics.widthPixels;
 		Height = displaymetrics.heightPixels;
@@ -26,7 +26,7 @@ public class bonus extends Activity {
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
 		int Action=event.getAction();
-		if(Action == 1){			
+		if(Action == 1){
 			float x_click = event.getX();
 			float y_click = event.getY();
 			float x1 = (float)(Width * 0.083);
@@ -40,17 +40,17 @@ public class bonus extends Activity {
 			
 			
 			if((x_click > x1 && x_click < x2)&&
-				y_click > y1 && y_click < y2){//рамка
+				y_click > y1 && y_click < y2){//пїЅпїЅпїЅпїЅпїЅ
 				
 				if(y_click < y_but1){
-					//убрать букву
+					//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 					Intent intent = new Intent();
 				    intent.putExtra("activ", 1);
 				    setResult(RESULT_OK, intent);
 				    finish();
 				} else 
 				if(y_click < y_but2){
-					//открыть букву
+					//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 					Intent intent = new Intent();
 				    intent.putExtra("activ", 2);
 				    setResult(RESULT_OK, intent);

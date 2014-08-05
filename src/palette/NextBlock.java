@@ -9,7 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
-import static screen.main.images;
+import static screen.Main.images;
 
 public class NextBlock extends View {
 	
@@ -88,11 +88,11 @@ public class NextBlock extends View {
 		float y_text = (float)(h*0.52);
 		float x_text2 = (float)(w*0.743);
 		
-		//рисуем текст - самое сложное
+		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		float size_text = (float)(h*0.037);
 		paint.setTextSize(size_text);
 		
-		canvas.drawText(lvl + " уровень", x_text, (float)(y_text+(size_text*0.5)), paint);
+		canvas.drawText(lvl + " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", x_text, (float)(y_text+(size_text*0.5)), paint);
 		canvas.drawText(money + "", x_text2, (float)(y_text+(size_text*0.5)), paint);
 		
 		drawPixmap(canvas, money_pix,
@@ -113,10 +113,10 @@ public class NextBlock extends View {
 
 	    matrix.reset();
 	    
-		matrix.postScale(scaleX, scaleY);//масштабируем
-		matrix.postTranslate(x, y);//задаём координаты
+		matrix.postScale(scaleX, scaleY);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		matrix.postTranslate(x, y);//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		
-		if(rotate != 0)matrix.preRotate(rotate, Width/2, Height/2);//поворачиваем относительно цетра
+		if(rotate != 0)matrix.preRotate(rotate, Width/2, Height/2);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		
         canvas.drawBitmap( ((PixmapGame) pixmap).getBitmap(), matrix, null);
     }
