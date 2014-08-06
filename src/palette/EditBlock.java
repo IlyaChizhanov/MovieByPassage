@@ -61,6 +61,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 		this.word = word;
 		this.context = context;
 		
+
 		sp = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
 		sp.setOnLoadCompleteListener(this);
 		
