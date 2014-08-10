@@ -16,6 +16,7 @@ public class Correct extends Activity {
 	NextBlock nb;
 	AdMobFullscreen banner;
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.correct);

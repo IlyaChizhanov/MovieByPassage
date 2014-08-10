@@ -14,6 +14,7 @@ import android.widget.ImageView;
 public class Poster extends Activity {
 	private int lvl;
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.poster);

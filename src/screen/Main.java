@@ -13,6 +13,7 @@ public class Main extends Activity {
 	
 	public static ImagesContainer images;
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);

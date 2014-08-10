@@ -13,7 +13,7 @@ public class Logo extends Activity {
 	
 	Downloader downloader;
 	private static final XAPKFile[] xAPKS = {
-    	new XAPKFile(3,14819545L,true),         
+    	new XAPKFile(5,93553179L,true),         
     };
 	
 	@Override
@@ -30,7 +30,8 @@ public class Logo extends Activity {
 		
 		Thread logoTimer = new Thread()
         {
-            public void run()
+            @Override
+			public void run()
             {
                 try
                 {

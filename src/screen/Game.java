@@ -18,7 +18,6 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.LinearLayout;
 
@@ -35,6 +34,7 @@ public class Game extends Activity implements OnPreparedListener,
 	
 	ObbTools obb;//êëàññ äëÿ ğàáîòû ñ ôàéëàìè ğàñøèğåíèÿ
 	Recall recall;
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
@@ -54,7 +54,7 @@ public class Game extends Activity implements OnPreparedListener,
 		
 		//ñîçäà¸ì áëîê ïğîñìîòğà âèäåî
 		SurfaceHolder holder = ((SurfaceView)findViewById(R.id.surfaceView1)).getHolder();
-		holder.addCallback((Callback) this);
+		holder.addCallback(this);
 		
 		mediaPlayer = new MediaPlayer();//ñîçäà¸ì îáúåêò ìåäèà ïëååğà
 		//------------çàãğóæàåì âèäåî---------------------
@@ -112,7 +112,11 @@ public class Game extends Activity implements OnPreparedListener,
         new Thread(new Runnable() {
 			@Override
 			public void run() {
+				try{
 				stop_film();
+				} catch(Exception e){
+					
+				}
 			}
 		}).start();        
 	}
@@ -132,7 +136,7 @@ public class Game extends Activity implements OnPreparedListener,
 				e.printStackTrace();
 			}
 			//îñòàíàâëèâàåì âèäåî åñëè îíî èãğàåòüñÿ áîëüøå 15 ñåêóíä 
-			if(mediaPlayer.getCurrentPosition() > 15000 && mediaPlayer.isPlaying()){
+			if(mediaPlayer != null && mediaPlayer.getCurrentPosition() > 15000 && mediaPlayer.isPlaying()){
 				if(mediaPlayer != null)mediaPlayer.pause();//îñòàíàâëèâàåì âèäåî
 				played = false;//âèäåî íå èãğàåòüñÿ
 			} else if(!mediaPlayer.isPlaying()){//åñëè âèäåî íå èãğàåòüñÿ
@@ -342,7 +346,7 @@ public class Game extends Activity implements OnPreparedListener,
 		case 39:
 			return "ÂÎĞÎÍÈÍÛ";
 		case 40:
-			return "ÄÎÊÒÎĞ ÕÀÓÇ";
+			return "ÄÎÊÒÎĞ ÕÀÓÑ";
 		case 41:
 			return "ËÎË";
 		case 42:
@@ -350,7 +354,7 @@ public class Game extends Activity implements OnPreparedListener,
 		case 43:
 			return "ÇÂ¨ÇÄÍÛÅ ÂÎÉÍÛ";
 		case 44:
-			return "ÃĞÈÔÎÍÛ";
+			return "ÃĞÈÔÔÈÍÛ";
 		case 45:
 			return "ÂĞÅÌß";
 		case 46:
@@ -362,11 +366,11 @@ public class Game extends Activity implements OnPreparedListener,
 		case 49:
 			return "ÒĞÀÍÑÔÎĞÌÅĞÛ";
 		case 50:
-			return "ÕÎÄß×ÈÅ ÌÅĞÒÂÈÖÛ";
+			return "ÕÎÄß×ÈÅ ÌÅĞÒÂÅÖÛ";
 		case 51:
 			return "ÇÂ¨ÇÄÍÛÅ ÂĞÀÒÀ";
 		case 52:
-			return "ÒÎÌ È ÄÆÅĞÈ";
+			return "ÒÎÌ È ÄÆÅĞĞÈ";
 		case 53:
 			return "ÒÀÊÑÈ";
 		case 54:
@@ -426,7 +430,7 @@ public class Game extends Activity implements OnPreparedListener,
 		case 81:
 			return "ÌÀËÜ×ÈØÍÈÊ";
 		case 82:
-			return "ÍÀÇÀÄ Â ÁÓÄÓÙÈÅ";
+			return "ÍÀÇÀÄ Â ÁÓÄÓÙÅÅ";
 		case 83:
 			return "ÀÍÀÒÎÌÈß ÑÒĞÀÑÒÈ";
 		case 84:
@@ -450,7 +454,7 @@ public class Game extends Activity implements OnPreparedListener,
 		case 93:
 			return "ÏÎÃÎÍß";
 		case 94:
-			return "İËŞÇÈß ÎÁÌÀÍÀ";
+			return "ÈËËŞÇÈß ÎÁÌÀÍÀ";
 		case 95:
 			return "ÂÏĞÈÒÛÊ";
 		case 96:
@@ -464,9 +468,9 @@ public class Game extends Activity implements OnPreparedListener,
 		case 100:
 			return "ÍÀÏĞÀËÎÌ";
 		case 101:
-			return "ÏËÀÍÅÒÀ ÑÎÊĞÎÂÈÙÜ";
+			return "ÏËÀÍÅÒÀ ÑÎÊĞÎÂÈÙ";
 		case 102:
-			return "ÍÅÊÎÃÄÀ ÍÅ ÑÄÀÂÀÉÑß";
+			return "ÍÈÊÎÃÄÀ ÍÅ ÑÄÀÂÀÉÑß";
 		case 103:
 			return "ÎÑÎÁÎ ÎÏÀÑÅÍ";
 		case 104:
@@ -486,7 +490,7 @@ public class Game extends Activity implements OnPreparedListener,
 		case 111:
 			return "ÊĞ¨ÑÒÍÛÉ ÎÒÅÖ";
 		case 112:
-			return "ÔÀĞÑÀÆ";
+			return "ÔÎĞÑÀÆ";
 		case 113:
 			return "ÇÅË¨ÍÀß ÌÈËß";
 		case 114:
@@ -506,13 +510,13 @@ public class Game extends Activity implements OnPreparedListener,
 		case 121:
 			return "ÊĞÀÑÍÀß ØÀÏÎ×ÊÀ";
 		case 122:
-			return "ÌÀËÅÔÈÑÒÅÍÒ";
+			return "ÌÀËÅÔÈÑÅÍÒÀ";
 		case 123:
 			return "ÊÓÕÍß Â ÏÀĞÈÆÅ";
 		case 124:
 			return "ÁÓÍÒÀĞÊÀ";
 		case 125:
-			return "ÂÎÉÍÛ ÍÅÂÅÑÒ";
+			return "ÂÎÉÍÀ ÍÅÂÅÑÒ";
 		case 126:
 			return "ÓÄÀ×È ×ÀÊ";
 		case 127:
@@ -560,7 +564,7 @@ public class Game extends Activity implements OnPreparedListener,
 		case 148:
 			return "ÆÈÇÍÜ ÀÄÅËÜ";
 		case 149:
-			return "ÊÎÊÎÈÍ";
+			return "ÊÎÊÀÈÍ";
 		case 150:
 			return "ÎÄÈÍ ÄÅÍÜ";
 		case 151:

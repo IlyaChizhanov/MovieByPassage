@@ -21,13 +21,15 @@ public class Recall{
 		adb = new AlertDialog.Builder(context)
 		.setTitle(R.string.recall_titile).setPositiveButton(R.string.recall_yes,//оценю
 				new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog,
+			        @Override
+					public void onClick(DialogInterface dialog,
 			                int id) {
 			        	OpenMarket();
 			        }
 			    })
 		.setNegativeButton(R.string.recall_no, //не спрашивать
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog,
 			                int id) {
 						recall_no();
@@ -36,7 +38,8 @@ public class Recall{
 			    })
         .setNeutralButton(R.string.recall_later, //позже
 				new DialogInterface.OnClickListener() {
-				    public void onClick(DialogInterface dialog,
+				    @Override
+					public void onClick(DialogInterface dialog,
 				            int id) {
 				        dialog.cancel();
 				    }

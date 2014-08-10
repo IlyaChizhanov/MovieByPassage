@@ -15,7 +15,7 @@ public class ObbTools {
 		this.context = context;
 		try {
 			expansionFile = APKExpansionSupport.getAPKExpansionZipFile(context,
-				        3, 0);
+				        5, 0);
 		} catch (IOException e) {
 			
 		}

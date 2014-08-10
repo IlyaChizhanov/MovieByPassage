@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class Alert extends Activity{
 	String text;
 	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alert);

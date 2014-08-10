@@ -10,18 +10,22 @@ public class PixmapGame implements Pixmap {
         this.setBitmap(bitmap);
     }
 
-    public int getWidth() {
+    @Override
+	public int getWidth() {
         return getBitmap().getWidth();
     }
 
-    public int getHeight() {
+    @Override
+	public int getHeight() {
         return getBitmap().getHeight();
     }
 
-    public void dispose() {
+    @Override
+	public void dispose() {
         getBitmap().recycle();
     }
 
+	@Override
 	public Bitmap getBitmap() {
 		return bitmap;
 	}

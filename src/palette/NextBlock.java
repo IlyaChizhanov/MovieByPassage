@@ -75,14 +75,14 @@ public class NextBlock extends View {
 		
 		drawPixmap(canvas, fon,
 				0,0,
-				(float)fon.getWidth(),(float)fon.getHeight(),
-				(float)w, (float)h, 0);
+				fon.getWidth(),fon.getHeight(),
+				w, h, 0);
 		
 		
 		drawPixmap(canvas, button_next,
 				x,y,
-				(float)button_next.getWidth(),(float)button_next.getHeight(),
-				(float)w_next, (float)h_next, 0);
+				button_next.getWidth(),button_next.getHeight(),
+				w_next, h_next, 0);
 		
 		float x_text = (float)(w*0.135);
 		float y_text = (float)(h*0.52);
@@ -108,8 +108,8 @@ public class NextBlock extends View {
 	public void drawPixmap(Canvas canvas, Pixmap pixmap, float x, float y,
 			float Width, float Height, float newWidth, float newHeight, float rotate) {
 		
-		float scaleX = (float) newWidth / (float) Width;
-	    float scaleY = (float) newHeight / (float) Height;
+		float scaleX = newWidth / Width;
+	    float scaleY = newHeight / Height;
 
 	    matrix.reset();
 	    

@@ -244,13 +244,13 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 				}
 			}else if(y_click > y3){//игрок кликнул по €чейкам
 				
-				float a = (float)(w/cells_final.length);
+				float a = w/cells_final.length;
 				if(a > ((h*0.18))) a = (float)((h*0.18));
 				float center = w/2 - a * cells_final.length / 2;
 				
 				for(int i=0; i < cells_final.length; i++){
 					if(cells_final[i] == ' ') continue;
-					if(inBounds(x_click, y_click, (float)(center + a * i),y3, a, a)){
+					if(inBounds(x_click, y_click, center + a * i,y3, a, a)){
 						if(cells[i] == -1)break;
 						cells[i] = -1;
 						MediaClick();//воспроизводим звук
@@ -349,7 +349,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 			int n = cells[i];
 			if(cells[i] == -1) n = open_letters[i];
 			
-			if((int)cells_final[i] != (int)letters[n])
+			if(cells_final[i] != letters[n])
 			{
 				correct = false;
 				break;
@@ -410,7 +410,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	
 	private void create_cells(Canvas canvas, int w, int h) {
 		float y = (float)(h*0.084);
-		float a = (float)(w/cells_final.length);
+		float a = w/cells_final.length;
 		if(a > ((h*0.18))) a = (float)((h*0.18));
 		
 		float center = w/2 - a * cells_final.length / 2;
@@ -419,14 +419,14 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 			if(cells_final[i] == ' ') continue;
 			
 			drawPixmap(canvas, images.getImage("cells"),
-					(float)(center + a * i),y,
+					center + a * i,y,
 					images.getImage("cells").getWidth(),
 					images.getImage("cells").getHeight(),
 					a,a, 0);
 			
 			if(cells[i] != -1){
 				drawPixmap(canvas, getImage(letters[cells[i]]),
-						(float)(center + a * i),y,
+						center + a * i,y,
 						images.getImage("ru_a").getWidth(),
 						images.getImage("ru_a").getHeight(),
 						a,a, 0);
@@ -434,7 +434,7 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 			
 			if(open_letters[i] != -1){
 				drawPixmap(canvas, getImage(letters[open_letters[i]]),
-						(float)(center + a * i),y,
+						center + a * i,y,
 						images.getImage("ru_a").getWidth(),
 						images.getImage("ru_a").getHeight(),
 						a,a, 0);
@@ -520,8 +520,8 @@ public class EditBlock extends View implements OnLoadCompleteListener {
 	public void drawPixmap(Canvas canvas, Pixmap pixmap, float x, float y,
 			float Width, float Height, float newWidth, float newHeight, float rotate) {
 		
-		float scaleX = (float) newWidth / (float) Width;
-	    float scaleY = (float) newHeight / (float) Height;
+		float scaleX = newWidth / Width;
+	    float scaleY = newHeight / Height;
 
 	    matrix.reset();
 	    
